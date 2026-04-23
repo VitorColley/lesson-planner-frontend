@@ -7,6 +7,7 @@ import MainLayout from "./layouts/MainLayout";
 function APP(){
   return(
     <BrowserRouter>
+      {/* MainLayout wraps the content of each page with a consistent header and navigation */}
       <MainLayout>
         <Routes>
           <Route path="/" element={<Home />} />

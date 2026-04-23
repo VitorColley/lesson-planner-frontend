@@ -1,3 +1,5 @@
+import UploadForm from "../components/UploadForm";
+
 function UploadCurriculum() {
   return (
     <div>
@@ -6,10 +8,8 @@ function UploadCurriculum() {
         Upload curriculum documents for processing and storage.
       </p>
 
-      <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <p className="text-sm text-slate-600">
-          Upload form placeholder.
-        </p>
+      <div className="mt-8">
+        <UploadForm />
       </div>
     </div>
   );
