@@ -1,4 +1,17 @@
-//retrieves curriculum mapping results from the backend
+//Error handling helper to extract error messages from API responses
+async function extractErrorMessage(response, fallbackMessage) {
+  const contentType = response.headers.get("content-type");
+
+  if (contentType && contentType.includes("application/json")) {
+    const errorBody = await response.json();
+    return errorBody.message || fallbackMessage;
+  }
+
+  const text = await response.text();
+  return text || fallbackMessage;
+}
+
+//Retrieves curriculum mapping results from the backend
 export async function mapCurriculum(payload){
     const response = await fetch("/api/curriculum/map",{
         method: "POST",
@@ -9,14 +22,14 @@ export async function mapCurriculum(payload){
     });
 
     if(!response.ok){
-        const message = await response.text();
-        throw new Error(message || "Failed to map curriculum");
+        const message = await extractErrorMessage(response, "Failed to map curriculum");
+        throw new Error(message);
     }
 
     return response.json();
 }
 
-//uploads curriculum file to the backend for processing
+//Uploads curriculum file to the backend for processing
 export async function uploadCurriculum(file){
     const formData = new FormData();
     formData.append("file", file);
@@ -27,8 +40,8 @@ export async function uploadCurriculum(file){
     });
 
     if(!response.ok){
-        const message = await response.text();
-        throw new Error(message || "Failed to upload curriculum");
+        const message = await extractErrorMessage(response, "Failed to upload curriculum");
+        throw new Error(message);
     }
 
     return response.json();
