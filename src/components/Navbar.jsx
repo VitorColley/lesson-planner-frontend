@@ -40,6 +40,14 @@ function Navbar(){
                     >
                         Upload Curriculum
                     </NavLink>
+                    <NavLink
+                        to="/lesson-builder"
+                        className={({isActive}) => 
+                            `${linkBase} ${isActive ? activeLink : inactiveLink}`
+                        }
+                    >
+                        Lesson Builder
+                    </NavLink>
                 </div>
             </nav>
         </header>

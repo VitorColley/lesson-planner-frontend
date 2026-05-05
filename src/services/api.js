@@ -46,3 +46,48 @@ export async function uploadCurriculum(file){
 
     return response.json();
 }
+
+//Sends the current lesson state to the backend to get activity suggestions
+export async function suggestActivities(lessonState) {
+  const response = await fetch("/api/lesson-builder/suggest-activities", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(lessonState),
+  });
+
+  if (!response.ok) {
+    const message = await extractErrorMessage(
+      response,
+      "Failed to suggest activities"
+    );
+    throw new Error(message);
+  }
+
+  return response.json();
+}
+
+//Sends the selected activity back to the backend to update the lesson state
+export async function selectActivity(lessonState, selectedActivity) {
+  const response = await fetch("/api/lesson-builder/select-activity", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      lessonState,
+      selectedActivity,
+    }),
+  });
+
+  if (!response.ok) {
+    const message = await extractErrorMessage(
+      response,
+      "Failed to select activity"
+    );
+    throw new Error(message);
+  }
+
+  return response.json();
+}
